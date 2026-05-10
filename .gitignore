@@ -1,0 +1,16 @@
+# Visual Studio temp files
+backend/.vs/
+backend/[Bb]in/
+backend/[Obj]/
+*.user
+*.suo
+*.sln.docstates
+
+# Environment files
+backend/.env
+backend/keys/private.pem
+backend/keys/*.pem
+
+# OS generated files
+.DS_Store
+Thumbs.db
