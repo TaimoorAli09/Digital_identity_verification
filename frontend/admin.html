@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Admin</title>
+
+    <link rel="stylesheet" href="css/admin.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="top">
+        <h1 class="title">Admin panel</h1>
+
+        <button id="add-student-button">Add Student</button>
+      </div>
+
+      <div class="content"></div>
+    </div>
+
+    <!-- TEMPLATE -->
+    <template id="student-card-template">
+      <div class="card">
+        <div class="card-details">
+          <div class="card-header">
+            <div>
+              <p class="student-id-label">Student ID</p>
+              <p class="student-id"></p>
+            </div>
+            <p class="program"></p>
+          </div>
+
+          <h3 class="name"></h3>
+
+          <div class="meta">
+            <div>
+              <span>Age</span>
+              <strong class="age"></strong>
+            </div>
+            <div>
+              <span>CNIC</span>
+              <strong class="cnic"></strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-side">
+          <div class="photo-box">
+            <img class="student-img" alt="Student photo" />
+          </div>
+          <div class="qr-box">
+            <img class="qr-img" alt="Student QR code" />
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <script type="module" src="javascript/admin.js"></script>
+  </body>
+</html>
+  

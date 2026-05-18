@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Card</title>
+
+    <link rel="stylesheet" href="css/card.css" />
+  </head>
+  <body>
+    <!-- TEMPLATE -->
+    <template id="student-card-template">
+      <div class="card">
+        <!-- LEFT SIDE -->
+        <div class="left">
+          <h3 class="name"></h3>
+          <p class="program"></p>
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="right">
+          <!-- IMAGE -->
+          <div class="image-box">
+            <img class="student-img" />
+          </div>
+
+          <!-- QR -->
+          <div class="qr-box">
+            <img class="qr-img" />
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <script type="module" src="javascript/card.js"></script>
+  </body>
+</html>

@@ -40,7 +40,24 @@ builder.Services.AddScoped<SignatureService>();
 
 builder.Services.AddScoped<QrService>();
 
+builder.Services.AddScoped<VerifyService>();
+
+//====================== Adding cors for  connecting frontend api ========================
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("allow",
+        policy =>
+        {
+            policy.AllowAnyOrigin()
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
+
 var app = builder.Build();
+app.UseCors("allow");
 
 if (app.Environment.IsDevelopment())
 {
@@ -49,6 +66,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 
 app.UseAuthorization();
 

@@ -1,0 +1,205 @@
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* PAGE BACKGROUND */
+body {
+    background: #f4f6fb;
+    padding: 25px;
+}
+
+/* MAIN CONTAINER */
+.container {
+    max-width: 1100px;
+    margin: auto;
+}
+
+/* TOP BAR */
+.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background: white;
+    padding: 15px 20px;
+    border-radius: 14px;
+
+    box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+
+    margin-bottom: 20px;
+}
+
+/* TITLE */
+.title {
+    font-size: 22px;
+    color: #111827;
+}
+
+/* BUTTON */
+button {
+    background: #4f46e5;
+    color: white;
+    border: none;
+
+    padding: 10px 16px;
+    border-radius: 10px;
+
+    cursor: pointer;
+    font-weight: bold;
+
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #3730a3;
+    transform: translateY(-2px);
+}
+
+/* CARDS GRID */
+.content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+/* STUDENT CARD */
+.card {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 20px;
+    background: linear-gradient(135deg, #ffffff 0%, #eef2ff 100%);
+    border: 1px solid rgba(99, 102, 241, 0.16);
+    padding: 22px;
+    border-radius: 22px;
+    box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    min-height: 250px;
+    text-align: left;
+}
+
+/* HOVER EFFECT */
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 28px 75px rgba(15, 23, 42, 0.16);
+}
+
+.card-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 18px;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.card-details .student-id-label {
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    color: #7c3aed;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.student-id {
+    color: #111827;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4;
+    word-break: break-word;
+    max-width: 320px;
+}
+
+.card .name {
+    margin: 0;
+    font-size: 26px;
+    line-height: 1.05;
+    color: #111827;
+}
+
+.card .program {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 14px;
+    border-radius: 999px;
+    background: rgba(99, 102, 241, 0.12);
+    color: #3730a3;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0;
+    white-space: nowrap;
+}
+
+.meta {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.meta span {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #6b7280;
+}
+
+.meta strong {
+    display: block;
+    font-size: 18px;
+    color: #111827;
+}
+
+.meta div {
+    background: #f8fafc;
+    border-radius: 18px;
+    padding: 16px;
+    box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.04);
+}
+
+.card-side {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    align-items: center;
+    justify-content: center;
+    min-width: 184px;
+}
+
+.photo-box,
+.qr-box {
+    width: 170px;
+    height: 170px;
+    border-radius: 30px;
+    background: linear-gradient(180deg, #eff6ff 0%, #ffffff 100%);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+}
+.qr-box {
+    background: white;
+}
+
+.photo-box img,
+.qr-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

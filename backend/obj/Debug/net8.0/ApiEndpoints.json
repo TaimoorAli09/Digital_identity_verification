@@ -8,27 +8,46 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "dto",
-        "Type": "backend.DTOs.StudentDto",
-        "IsRequired": true
+        "Name": "StudentId",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Age",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "Program",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Cnic",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Image",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
   },
   {
     "ContainingType": "backend.Controllers.StudentController",
-    "Method": "Verify",
-    "RelativePath": "api/Student/verify/{token}",
+    "Method": "GetAllStudents",
+    "RelativePath": "api/Student/getall",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "token",
-        "Type": "System.String",
-        "IsRequired": true
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": []
   }
 ]
