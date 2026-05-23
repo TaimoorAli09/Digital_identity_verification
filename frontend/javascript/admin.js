@@ -1,27 +1,55 @@
 import { getAllStudents } from "../api/student.api.js";
-import { createStudentCard } from "./card.js";
+import { createStudentCard } from "./card.js"; // Ensure this path is correct
 
 document.addEventListener("DOMContentLoaded", initializePage);
 
-function initializePage() {
-  loadAllStudents();
+async function initializePage() {
+    // 1. Setup Button
+    const addBtn = document.getElementById("add-student-button");
+    if(addBtn) {
+        addBtn.addEventListener("click", () => {
+            window.location.href = "form.html";
+        });
+    }
 
-  document
-    .getElementById("add-student-button")
-    .addEventListener("click", () => {
-      window.location.href = "form.html";
-    });
+    // 2. Load Data
+    await loadAllStudents();
 }
 
 async function loadAllStudents() {
-  const students = await getAllStudents();
+    try {
+        const students = await getAllStudents();
+        const container = document.querySelector(".content");
+        
+        if (!container) {
+            console.error("❌ Container '.content' not found");
+            return;
+        }
 
-  const container = document.querySelector(".content");
-  container.innerHTML = "";
+        console.log("📊 Backend returned students:", students);
 
-  students.forEach((student) => {
-    const card = createStudentCard(student);
+        if (!students || students.length === 0) {
+            container.innerHTML = "<p style='padding: 40px; text-align: center; color: #999;'>No students found</p>";
+            return;
+        }
 
-    container.appendChild(card);
-  });
+        container.innerHTML = "";
+
+        let successCount = 0;
+        students.forEach((student) => {
+            const card = createStudentCard(student);
+            if (card) {
+                container.appendChild(card);
+                successCount++;
+            }
+        });
+
+        console.log(`✅ Successfully rendered ${successCount}/${students.length} cards`);
+    } catch (error) {
+        console.error("❌ Failed to load students:", error);
+        const container = document.querySelector(".content");
+        if (container) {
+            container.innerHTML = `<p style='padding: 40px; text-align: center; color: #e11d48;'>Error loading students: ${error.message}</p>`;
+        }
+    }
 }

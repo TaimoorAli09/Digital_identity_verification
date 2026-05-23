@@ -5,17 +5,36 @@ namespace backend.Services;
 
 public class QrService
 {
-    public byte[] GenerateQr(string url)
+    public byte[] GenerateQr(
+        string text)
     {
-        using var generator = new QRCodeGenerator();
+        using var generator =
+            new QRCodeGenerator();
 
-        var data = generator.CreateQrCode(
-            url,
-            QRCodeGenerator.ECCLevel.Q
+        var data =
+            generator.CreateQrCode(
+                text,
+                QRCodeGenerator
+                .ECCLevel.M
+            );
+
+        var qrCode =
+            new PngByteQRCode(
+                data
+            );
+
+        return qrCode.GetGraphic(
+
+            pixelsPerModule: 8,
+
+            darkColor:
+                Color.Black,
+
+            lightColor:
+                Color.White,
+
+            drawQuietZones:
+                true
         );
-
-        var qrCode = new PngByteQRCode(data);
-
-        return qrCode.GetGraphic(20);
     }
 }

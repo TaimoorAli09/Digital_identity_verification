@@ -3,6 +3,7 @@ using backend.DTOs;
 using backend.Models;
 using backend.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration; // ✅ EXTENSION INCLUDED
 
 namespace backend.Controllers;
 
@@ -14,17 +15,25 @@ public class StudentController : ControllerBase
     private readonly SignatureService _signatureService;
     private readonly VerifyService _verifyService;
     private readonly QrService _qrService;
+    private readonly TokenService _tokenService;
+    private readonly IConfiguration _configuration; // ✅ REFRESH LAYER FIELD
 
+
+    // constructor updated to support appsettings extraction automatically
     public StudentController(
-        AppDbContext db,
-        SignatureService signatureService,
-        VerifyService verifyService,
-        QrService qrService)
+     AppDbContext db,
+     SignatureService signatureService,
+     VerifyService verifyService,
+     QrService qrService,
+     TokenService tokenService,
+     IConfiguration configuration) // ✅ SERVICE INJECTED
     {
         _db = db;
         _signatureService = signatureService;
         _verifyService = verifyService;
         _qrService = qrService;
+        _tokenService = tokenService;
+        _configuration = configuration; // ✅ ASSIGNED
     }
 
     // =========================================
@@ -32,86 +41,90 @@ public class StudentController : ControllerBase
     // =========================================
 
     [HttpPost("create")]
-    public IActionResult CreateStudent([FromForm] StudentDto dto)
+    public IActionResult CreateStudent(
+    [FromForm] StudentDto dto)
     {
         try
         {
-            // ================= IMAGE VALIDATION =================
+            // =============================
+            // IMAGE VALIDATION
+            // =============================
             var image = dto.Image;
 
             if (image == null || image.Length == 0)
-                return BadRequest("Image is required");
+                return BadRequest("Image required");
 
-            var allowedExtensions = new[] { ".jpg", ".jpeg", ".png" };
             var extension = Path.GetExtension(image.FileName).ToLower();
+            var allowed = new[] { ".jpg", ".jpeg", ".png" };
 
-            if (!allowedExtensions.Contains(extension))
-                return BadRequest("Only JPG and PNG allowed");
+            if (!allowed.Contains(extension))
+                return BadRequest("Only JPG/PNG allowed");
 
-            if (image.Length > 5 * 1024 * 1024)
-                return BadRequest("Max file size is 5MB");
-
-            // ================= SAVE IMAGE =================
-            if (!Directory.Exists("uploads"))
-                Directory.CreateDirectory("uploads");
-
-            var fileName = Guid.NewGuid().ToString() + extension;
-            var filePath = Path.Combine("uploads", fileName);
-
-            using (var stream = new FileStream(filePath, FileMode.Create))
+            // =============================
+            // CREATE UPLOAD FOLDER
+            // =============================
+            if (!Directory.Exists("wwwroot/uploads"))
             {
-                image.CopyTo(stream);
+                Directory.CreateDirectory("wwwroot/uploads");
             }
 
-            var imageUrl =
-                $"{Request.Scheme}://{Request.Host}/uploads/{fileName}";
+            // =============================
+            // SAVE IMAGE
+            // =============================
+            var fileName = Guid.NewGuid() + extension;
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", fileName);
 
-            // ================= PAYLOAD =================
-            var payloadObj = new
-            {
-                studentId = dto.StudentId,
-                name = dto.Name,
-                age = dto.Age,
-                program = dto.Program,
-                cnic = dto.Cnic,
-                image = imageUrl,
-                expiry = DateTime.Now.AddYears(1)
-            };
+            using var stream = new FileStream(filePath, FileMode.Create);
+            image.CopyTo(stream);
 
-            var payloadJson =
-                System.Text.Json.JsonSerializer.Serialize(payloadObj);
+            // =============================
+            // IMAGE URL
+            // =============================
+            var imageUrl = $"{Request.Scheme}://{Request.Host}/uploads/{fileName}";
 
-            // ================= SIGNATURE =================
-            var signature = _signatureService.SignData(payloadJson);
+            // =============================
+            // GENERATE RANDOM TOKEN & SIGN IT
+            // =============================
+            var token = _tokenService.GenerateToken();
+            var signature = _signatureService.SignData(token);
 
-            // ================= QR GENERATION =================
-            var qrData = new
-            {
-                payload = payloadJson,
-                signature = Convert.ToBase64String(signature)
-            };
+            // =================================================================
+            // ✅ REAL-WORLD LINK GENERATION FOR MOBILE PHONES
+            // =================================================================
 
-            var qrString =
-                System.Text.Json.JsonSerializer.Serialize(qrData);
+            // 1. Fetch your frontend address route profile path cleanly from settings
+            string frontendBaseUrl = _configuration["AppSettings:FrontendBaseUrl"];
 
-            var qrImage = _qrService.GenerateQr(qrString);
+            // 2. Escape variables to protect Base64 symbols (+, /, =) from breaking inside web URLs
+            string base64Signature = Convert.ToBase64String(signature);
+            string encodedSignature = Uri.EscapeDataString(base64Signature);
+            string encodedToken = Uri.EscapeDataString(token);
 
-            // ================= SAVE STUDENT =================
+            // 3. Assemble the direct web link path query string
+            string qrWebLink = $"{frontendBaseUrl}/frontend/scan.html?token={encodedToken}&signature={encodedSignature}";
+
+            // =================================================================
+            // GENERATE QR
+            // =================================================================
+
+            // Pass the clickable web link string right into your existing generator engine
+            var qrImage = _qrService.GenerateQr(qrWebLink);
+
+            // =============================
+            // SAVE STUDENT
+            // =============================
             var student = new Student
             {
                 StudentId = dto.StudentId,
                 Name = dto.Name,
                 Age = dto.Age,
                 Program = dto.Program,
+                Payload = "",
                 Cnic = dto.Cnic,
                 ImageUrl = imageUrl,
-
-                Payload = payloadJson,
+                Token = token,
                 Signature = signature,
-
-                // ✅ SAVE QR IN DB
                 QrImage = qrImage,
-
                 CreatedAt = DateTime.Now,
                 ExpiryDate = DateTime.Now.AddYears(1)
             };
@@ -119,17 +132,58 @@ public class StudentController : ControllerBase
             _db.Students.Add(student);
             _db.SaveChanges();
 
-            // ================= RESPONSE =================
+            // =============================
+            // RESPONSE
+            // =============================
             return Ok(new
             {
-                message = "Student created successfully",
-                student.Id,
-                student.StudentId,
+                message = "Student created",
                 student.Name,
                 student.Program,
                 student.ImageUrl,
-
                 qrBase64 = Convert.ToBase64String(qrImage)
+            });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
+    }
+
+    // ========== verify student ==========================
+    [HttpPost("verify")]
+    public IActionResult Verify(
+    [FromBody] VerifyDto dto)
+    {
+        try
+        {
+            bool valid = _verifyService.VerifySignature(dto.Token, dto.Signature);
+
+            if (!valid)
+            {
+                return BadRequest(new { status = "FAKE QR" });
+            }
+
+            var student = _db.Students.FirstOrDefault(s => s.Token == dto.Token);
+
+            if (student == null)
+            {
+                return BadRequest("Student not found");
+            }
+
+            if (DateTime.Now > student.ExpiryDate)
+            {
+                return BadRequest("Card expired");
+            }
+
+            return Ok(new
+            {
+                status = "VALID",
+                student.Name,
+                student.Age,
+                student.Program,
+                student.Cnic,
+                student.ImageUrl
             });
         }
         catch (Exception ex)
@@ -141,7 +195,6 @@ public class StudentController : ControllerBase
     // =========================================
     // GET ALL STUDENTS
     // =========================================
-
     [HttpGet("getall")]
     public IActionResult GetAllStudents()
     {
@@ -156,8 +209,6 @@ public class StudentController : ControllerBase
                 student.Program,
                 student.Cnic,
                 student.ImageUrl,
-
-                // ✅ LOAD QR FROM DB
                 qrBase64 = Convert.ToBase64String(student.QrImage)
             }).ToList();
 

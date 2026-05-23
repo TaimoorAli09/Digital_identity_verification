@@ -11,4 +11,5 @@ public class AppDbContext : DbContext
     }
 
     public DbSet<Student> Students { get; set; }
+    
 }

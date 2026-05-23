@@ -12,6 +12,7 @@ public class Student
 
     public string Program { get; set; }
 
+    public string Token { get; set; }
     public string Cnic { get; set; }
 
     public string ImageUrl { get; set; }

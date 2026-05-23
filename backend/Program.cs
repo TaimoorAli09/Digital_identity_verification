@@ -65,7 +65,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+
+//The Redirection: UseHttpsRedirection forces the
+//    browser to change from http://192.168.1.10:5299 to https://192.168.1.10:7277.
+//app.UseHttpsRedirection();
+
+// for wwwroot
 app.UseStaticFiles();
 
 app.UseAuthorization();

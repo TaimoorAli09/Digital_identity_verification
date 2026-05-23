@@ -13,17 +13,11 @@ async function sendData(event, form) {
 
   try {
     const formData = new FormData(form);
-
     const result = await createStudent(formData);
 
-    console.log(result);
-
     alert("Student Created Successfully");
-
-    window.location.href = "../admin.html";
+    window.location.href = "admin.html";
   } catch (error) {
-    console.error(error);
-
-    alert(error.message);
+    alert("Failed to create student: " + error.message);
   }
 }

@@ -49,5 +49,21 @@
     "Order": 0,
     "Parameters": [],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "backend.Controllers.StudentController",
+    "Method": "Verify",
+    "RelativePath": "api/Student/verify",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "VerifyDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   }
 ]

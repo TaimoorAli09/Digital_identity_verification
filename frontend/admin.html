@@ -1,54 +1,43 @@
 <!doctype html>
 <html>
   <head>
-    <title>Admin</title>
-
+    <title>Admin Panel</title>
     <link rel="stylesheet" href="css/admin.css" />
   </head>
-
   <body>
     <div class="container">
       <div class="top">
-        <h1 class="title">Admin panel</h1>
-
+        <h1 class="title">Admin Panel</h1>
         <button id="add-student-button">Add Student</button>
       </div>
+      <div class="content"></div> </div>
 
-      <div class="content"></div>
-    </div>
-
-    <!-- TEMPLATE -->
     <template id="student-card-template">
       <div class="card">
-        <div class="card-details">
-          <div class="card-header">
-            <div>
-              <p class="student-id-label">Student ID</p>
-              <p class="student-id"></p>
-            </div>
-            <p class="program"></p>
+        <div class="card-info">
+          <div class="id-section">
+            <span>Student ID</span>
+            <p class="student-id"></p>
           </div>
-
-          <h3 class="name"></h3>
-
-          <div class="meta">
-            <div>
-              <span>Age</span>
-              <strong class="age"></strong>
+          <h3 class="name-text"></h3>
+          <span class="program-tag"></span>
+          <div class="meta-grid">
+            <div class="meta-item">
+              <label>Age</label>
+              <p class="age-val"></p>
             </div>
-            <div>
-              <span>CNIC</span>
-              <strong class="cnic"></strong>
+            <div class="meta-item">
+              <label>CNIC</label>
+              <p class="cnic-val"></p>
             </div>
           </div>
         </div>
-
-        <div class="card-side">
-          <div class="photo-box">
-            <img class="student-img" alt="Student photo" />
+        <div class="card-visuals">
+          <div class="img-box">
+            <img class="student-img" alt="Student Photo" />
           </div>
           <div class="qr-box">
-            <img class="qr-img" alt="Student QR code" />
+            <img class="qr-img" alt="QR Code" />
           </div>
         </div>
       </div>
@@ -57,4 +46,3 @@
     <script type="module" src="javascript/admin.js"></script>
   </body>
 </html>
-  

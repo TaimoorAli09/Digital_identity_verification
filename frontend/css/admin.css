@@ -71,68 +71,70 @@ button:hover {
     display: flex;
     justify-content: space-between;
     align-items: stretch;
-    gap: 20px;
-    background: linear-gradient(135deg, #ffffff 0%, #eef2ff 100%);
-    border: 1px solid rgba(99, 102, 241, 0.16);
-    padding: 22px;
-    border-radius: 22px;
+    gap: 24px;
+    background: linear-gradient(180deg, #ffffff 0%, #eef2ff 100%);
+    border: 1px solid rgba(99, 102, 241, 0.18);
+    padding: 24px;
+    border-radius: 28px;
     box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    min-height: 250px;
+    min-height: 260px;
     text-align: left;
+}
+
+@media (max-width: 860px) {
+    .card {
+        flex-direction: column;
+        min-height: auto;
+    }
 }
 
 /* HOVER EFFECT */
 .card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 28px 75px rgba(15, 23, 42, 0.16);
+    transform: translateY(-10px);
+    box-shadow: 0 28px 80px rgba(15, 23, 42, 0.16);
 }
 
-.card-details {
+.card-info {
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     gap: 18px;
 }
 
-.card-header {
+.id-section {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 16px;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 8px;
 }
 
-.card-details .student-id-label {
+.id-section span {
     font-size: 12px;
-    letter-spacing: 0.15em;
-    color: #7c3aed;
+    color: #6366f1;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
     font-weight: 700;
 }
 
 .student-id {
-    color: #111827;
     font-size: 14px;
-    font-weight: 600;
-    line-height: 1.4;
-    word-break: break-word;
-    max-width: 320px;
+    color: #0f172a;
+    font-weight: 700;
 }
 
-.card .name {
-    margin: 0;
-    font-size: 26px;
+.name-text {
+    font-size: 32px;
     line-height: 1.05;
-    color: #111827;
+    color: #0f172a;
+    margin: 0;
 }
 
-.card .program {
+.program-tag {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 10px 14px;
+    padding: 10px 16px;
     border-radius: 999px;
     background: rgba(99, 102, 241, 0.12);
     color: #3730a3;
@@ -140,66 +142,81 @@ button:hover {
     font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    margin: 0;
-    white-space: nowrap;
+    width: fit-content;
 }
 
-.meta {
+.meta-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 14px;
+    gap: 16px;
 }
 
-.meta span {
-    display: block;
-    margin-bottom: 6px;
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: #6b7280;
-}
-
-.meta strong {
-    display: block;
-    font-size: 18px;
-    color: #111827;
-}
-
-.meta div {
-    background: #f8fafc;
+.meta-item {
+    background: rgba(248, 250, 252, 0.95);
     border-radius: 18px;
     padding: 16px;
     box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.04);
 }
 
-.card-side {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-    align-items: center;
-    justify-content: center;
-    min-width: 184px;
+.meta-item label {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #64748b;
+    margin-bottom: 8px;
 }
 
-.photo-box,
-.qr-box {
-    width: 170px;
-    height: 170px;
-    border-radius: 30px;
-    background: linear-gradient(180deg, #eff6ff 0%, #ffffff 100%);
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+.meta-item p {
+    margin: 0;
+    font-weight: 700;
+    font-size: 18px;
+    color: #0f172a;
 }
+
+.card-visuals {
+    width: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+}
+
+.img-box,
 .qr-box {
+    width: 100%;
+    border-radius: 26px;
+    overflow: hidden;
+    background: #f8fafc;
+    border: 1px solid rgba(15, 23, 42, 0.06);
+    box-shadow: 0 16px 30px rgba(15, 23, 42, 0.06);
+}
+
+.img-box {
+    height: 180px;
+}
+
+.qr-box {
+    height: 180px;
+    padding: 12px;
     background: white;
 }
 
-.photo-box img,
-.qr-box img {
+.student-img,
+.qr-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
+
+.qr-img {
+    object-fit: contain;
+}
+
+.card .student-id,
+.card .name-text,
+.card .program-tag,
+.card .meta-item p {
+    word-break: break-word;
+}
+

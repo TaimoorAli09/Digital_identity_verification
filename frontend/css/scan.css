@@ -1,0 +1,147 @@
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #f1f5f9;
+  margin: 0;
+  padding: 20px;
+  color: #1e293b;
+}
+
+.scanner-container {
+  max-width: 500px;
+  margin: 40px auto;
+  background: white;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  text-align: center;
+}
+
+.scan-header h1 {
+  margin: 0 0 4px 0;
+  font-size: 24px;
+  color: #0f172a;
+}
+
+.scan-header p {
+  margin: 0 0 24px 0;
+  color: #64748b;
+  font-size: 14px;
+}
+
+#reader-wrapper {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid #e2e8f0;
+}
+
+/* Modal Overlay Data block matching JavaScript class handles */
+#result-panel {
+  margin-top: 20px;
+  padding: 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #fafafa;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.status-badge {
+  padding: 12px;
+  font-weight: 700;
+  font-size: 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  letter-spacing: 0.5px;
+}
+
+.status-badge.valid {
+  background-color: #dcfce7;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+}
+
+.status-badge.invalid {
+  background-color: #ffe4e6;
+  color: #b91c1c;
+  border: 1px solid #fecdd3;
+}
+
+#student-profile-card {
+  display: flex;
+  gap: 16px;
+  text-align: left;
+  background: white;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #f1f5f9;
+  margin-bottom: 20px;
+}
+
+.avatar-frame img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+}
+
+.profile-details {
+  flex-grow: 1;
+}
+
+.profile-details h2 {
+  margin: 0 0 4px 0;
+  font-size: 20px;
+  color: #0f172a;
+}
+
+.tag {
+  background: #eff6ff;
+  color: #1d4ed8;
+  padding: 2px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 4px;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid #f1f5f9;
+  margin: 12px 0;
+}
+
+.detail-row {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.detail-row label {
+  color: #64748b;
+  font-weight: 500;
+  display: inline-block;
+  width: 55px;
+}
+
+.detail-row span {
+  color: #334155;
+  font-weight: 600;
+}
+
+#reset-scanner-btn {
+  width: 100%;
+  padding: 12px;
+  background: #0f172a;
+  color: white;
+  border: none;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#reset-scanner-btn:hover {
+  background: #1e293b;
+}

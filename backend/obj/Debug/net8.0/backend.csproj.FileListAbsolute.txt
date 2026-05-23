@@ -141,7 +141,6 @@ E:\Digital_identity_verification\backend\obj\Debug\net8.0\staticwebassets.build.
 E:\Digital_identity_verification\backend\obj\Debug\net8.0\staticwebassets.development.json
 E:\Digital_identity_verification\backend\obj\Debug\net8.0\staticwebassets.build.endpoints.json
 E:\Digital_identity_verification\backend\obj\Debug\net8.0\swae.build.ex.cache
-E:\Digital_identity_verification\backend\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 E:\Digital_identity_verification\backend\obj\Debug\net8.0\backend.csproj.Up2Date
 E:\Digital_identity_verification\backend\obj\Debug\net8.0\backend.dll
 E:\Digital_identity_verification\backend\obj\Debug\net8.0\refint\backend.dll
@@ -149,3 +148,5 @@ E:\Digital_identity_verification\backend\obj\Debug\net8.0\backend.pdb
 E:\Digital_identity_verification\backend\obj\Debug\net8.0\backend.genruntimeconfig.cache
 E:\Digital_identity_verification\backend\obj\Debug\net8.0\ref\backend.dll
 E:\Digital_identity_verification\backend\bin\Debug\net8.0\QRCoder.dll
+E:\Digital_identity_verification\backend\bin\Debug\net8.0\backend.staticwebassets.runtime.json
+E:\Digital_identity_verification\backend\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

@@ -9,24 +9,47 @@ public class VerifyService
 
     public VerifyService()
     {
-        // Load PUBLIC key (safe to expose)
-        var publicKey = File.ReadAllText("keys/public.pem");
+        // load PUBLIC key
+        var publicKey =
+            File.ReadAllText(
+                "keys/public.pem"
+            );
 
         _rsa = RSA.Create();
-        _rsa.ImportFromPem(publicKey);
+
+        _rsa.ImportFromPem(
+    publicKey.ToCharArray()
+);
     }
 
-    public bool VerifySignature(string data, byte[] signature)
+    public bool VerifySignature(
+        string data,
+        string signatureString
+    )
     {
         try
         {
-            var dataBytes = Encoding.UTF8.GetBytes(data);
+            // convert text into bytes
+            var dataBytes =
+                Encoding.UTF8
+                .GetBytes(data);
 
+            // convert Base64 signature
+            // from QR into byte[]
+            var signatureBytes =
+                Convert
+                .FromBase64String(
+                    signatureString
+                );
+
+            // verify RSA signature
             return _rsa.VerifyData(
                 dataBytes,
-                signature,
-                HashAlgorithmName.SHA256,
-                RSASignaturePadding.Pkcs1
+                signatureBytes,
+                HashAlgorithmName
+                .SHA256,
+                RSASignaturePadding
+                .Pkcs1
             );
         }
         catch

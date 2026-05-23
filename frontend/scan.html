@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gate Entry Verification</title>
+    <link rel="stylesheet" href="css/scan.css" />
+  </head>
+  <body>
+    <div class="scanner-container">
+      <header class="scan-header">
+        <h1>Gate Security Passport</h1>
+        <p id="loading-state">Decrypting token security layers...</p>
+      </header>
+
+      <!-- Dynamic Verification Feedback Display Panel starts hidden -->
+      <div id="result-panel" class="hidden">
+        <div id="status-badge"></div>
+        
+        <div id="student-profile-card">
+          <div class="avatar-frame">
+            <img id="verified-avatar" src="" alt="Student Profile Photo" />
+          </div>
+          <div class="profile-details">
+            <h2 id="verified-name"></h2>
+            <div class="badge-row">
+              <span id="verified-program" class="tag"></span>
+            </div>
+            <hr />
+            <div class="detail-row">
+              <label>CNIC:</label>
+              <span id="verified-cnic"></span>
+            </div>
+            <div class="detail-row">
+              <label>Age:</label>
+              <span id="verified-age"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="javascript/scan.js"></script>
+  </body>
+</html>
