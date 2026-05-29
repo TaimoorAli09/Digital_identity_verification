@@ -1,5 +1,5 @@
 // scan.js
-import { verifyStudentCard } from "../api/student.api.js";
+import { verifyStudentCard } from "../services/student.api.js";
 
 document.addEventListener("DOMContentLoaded", initializeURLVerification);
 

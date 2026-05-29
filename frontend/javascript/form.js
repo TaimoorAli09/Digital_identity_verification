@@ -1,4 +1,4 @@
-import { createStudent } from "../api/student.api.js";
+import { createStudent } from "../services/student.api.js";
 
 document.addEventListener("DOMContentLoaded", initializeForm);
 

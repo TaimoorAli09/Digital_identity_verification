@@ -1,0 +1,48 @@
+services:
+
+  # 1. DATABASE (SQL Server)
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sql-server
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - sql_data:/var/opt/mssql
+    ports:
+      - "1433:1433"
+    networks:
+      - identity-net
+
+  # 2. BACKEND (.NET Web API)
+  backend:
+    build: ./backend
+    container_name: identity-api
+    ports:
+      - "5299:5299"
+    env_file:
+      - .env
+    depends_on:
+      - db
+    networks:
+      - identity-net
+
+  # 3. FRONTEND (Nginx)
+  frontend:
+    build: ./frontend
+    container_name: identity-web
+    ports:
+      - "80:5500"
+    depends_on:
+      - backend
+    networks: 
+      - identity-net
+
+# VOLUME (persistent DB storage)
+volumes:
+  sql_data:
+
+# NETWORK (internal communication)
+networks:
+  identity-net:
+    driver: bridge

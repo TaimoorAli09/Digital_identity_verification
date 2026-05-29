@@ -1,6 +1,7 @@
 // Inside your student.api.js
 // ❗ CHANGE THIS TO YOUR ACTIVE MACHINE IP FROM IPCONFIG (Match your appsettings)
-const BASE_URL = "http://192.168.1.10:5299/api/Student"; 
+// const BASE_URL = "http://192.168.1.10:5299/api/Student"; 
+const BASE_URL = "/api/Student";
 
 async function safeParse(response) {
   const text = await response.text();

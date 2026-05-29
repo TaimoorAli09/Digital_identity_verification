@@ -1,48 +1,53 @@
 using backend.Data;
 using backend.Services;
-using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-// ==========================Loading environmental variables from .env =====================================
-Env.Load();
+
+// ==========================
+// Load Environment Variables
+// ==========================
 
 var server = Environment.GetEnvironmentVariable("DB_SERVER");
-
 var db = Environment.GetEnvironmentVariable("DB_NAME");
-
 var user = Environment.GetEnvironmentVariable("DB_USER");
-
 var password = Environment.GetEnvironmentVariable("DB_PASSWORD");
 
+Console.WriteLine($"DB_SERVER={server}");
+Console.WriteLine($"DB_NAME={db}");
+Console.WriteLine($"DB_USER={user}");
+
 var connectionString =
-$"Server={server};Database={db};User Id={user};Password={password};TrustServerCertificate=True;";
+$"Server={server},1433;Database={db};User Id={user};Password={password};TrustServerCertificate=True;Encrypt=False;";
+
+// ==========================
+// Database
+// ==========================
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString));
-// =========================================================================================
+
+// ==========================
+// Controllers + Swagger
+// ==========================
+
 builder.Services.AddControllers();
-
 builder.Services.AddEndpointsApiExplorer();
-
 builder.Services.AddSwaggerGen();
 
-
-// ========== Adding Services from services folder ==============
-
-// these AddScoped are dependency injection 
+// ==========================
+// Dependency Injection
+// ==========================
 
 builder.Services.AddScoped<TokenService>();
-
 builder.Services.AddScoped<HashService>();
-
 builder.Services.AddScoped<SignatureService>();
-
 builder.Services.AddScoped<QrService>();
-
 builder.Services.AddScoped<VerifyService>();
 
-//====================== Adding cors for  connecting frontend api ========================
+// ==========================
+// CORS
+// ==========================
 
 builder.Services.AddCors(options =>
 {
@@ -56,21 +61,58 @@ builder.Services.AddCors(options =>
 });
 
 
-var app = builder.Build();
-app.UseCors("allow");
+builder.WebHost.UseUrls("http://0.0.0.0:5299");
+// ==========================
+// BUILD APP
+// ==========================
 
-if (app.Environment.IsDevelopment())
+var app = builder.Build();
+
+
+// ==========================
+// Create DB Automatically
+// ==========================
+
+using (var scope = app.Services.CreateScope())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+    var retries = 10;
+
+    while (true)
+    {
+        try
+        {
+            context.Database.EnsureCreated();
+            Console.WriteLine("Database connected successfully.");
+            break;
+        }
+        catch (Exception ex)
+        {
+            retries--;
+
+            Console.WriteLine($"DB not ready yet. Retries left: {retries}");
+            Console.WriteLine(ex.Message);
+
+            if (retries == 0)
+            {
+                throw; // fail only after multiple attempts
+            }
+
+            Thread.Sleep(5000); // wait 5 seconds
+        }
+    }
 }
 
+// ==========================
+// Middleware
+// ==========================
 
-//The Redirection: UseHttpsRedirection forces the
-//    browser to change from http://192.168.1.10:5299 to https://192.168.1.10:7277.
-//app.UseHttpsRedirection();
+app.UseCors("allow");
 
-// for wwwroot
+app.UseSwagger();
+app.UseSwaggerUI();
+
 app.UseStaticFiles();
 
 app.UseAuthorization();
