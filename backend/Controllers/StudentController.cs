@@ -80,7 +80,8 @@ public class StudentController : ControllerBase
             // =============================
             // IMAGE URL
             // =============================
-            var imageUrl = $"{Request.Scheme}://{Request.Host}/uploads/{fileName}";
+            //var imageUrl = $"{Request.Scheme}://{Request.Host}/uploads/{fileName}";
+            var imageUrl = $"/uploads/{fileName}";
 
             // =============================
             // GENERATE RANDOM TOKEN & SIGN IT
@@ -93,16 +94,18 @@ public class StudentController : ControllerBase
             // =================================================================
 
             // 1. Fetch your frontend address route profile path cleanly from settings
-            string frontendBaseUrl = _configuration["AppSettings:FrontendBaseUrl"];
+            //string frontendBaseUrl = _configuration["AppSettings:FrontendBaseUrl"];
 
+            string frontendBaseUrl = $"{Request.Scheme}://{Request.Host}";
             // 2. Escape variables to protect Base64 symbols (+, /, =) from breaking inside web URLs
             string base64Signature = Convert.ToBase64String(signature);
             string encodedSignature = Uri.EscapeDataString(base64Signature);
             string encodedToken = Uri.EscapeDataString(token);
 
             // 3. Assemble the direct web link path query string
-            string qrWebLink = $"{frontendBaseUrl}/frontend/scan.html?token={encodedToken}&signature={encodedSignature}";
+            //string qrWebLink = $"{frontendBaseUrl}/frontend/scan.html?token={encodedToken}&signature={encodedSignature}";
 
+            string qrWebLink =$"{frontendBaseUrl}/frontend/scan.html?token={encodedToken}&signature={encodedSignature}";
             // =================================================================
             // GENERATE QR
             // =================================================================

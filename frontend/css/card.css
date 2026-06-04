@@ -1,20 +1,94 @@
-.card {
-    width: 420px;
-    height: 260px;
-    background: #ffffff;
-    border-radius: 24px;
+/* =========================
+   GLOBAL RESET
+========================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: #f8fafc;
+    color: #1e293b;
+    padding: 20px;
+    line-height: 1.5;
+}
+
+/* =========================
+   CONTAINER
+========================= */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
     display: flex;
-    padding: 24px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* =========================
+   HEADER
+========================= */
+.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    padding: 16px 24px;
+    border-radius: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+    font-size: 24px;
+    font-weight: 800;
+    color: #1e293b;
+}
+
+/* =========================
+   GRID
+========================= */
+.content {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+/* =========================
+   CARD
+========================= */
+.card {
+    height: 180px;
+    background: #ffffff;
+    border-radius: 16px;
+    display: flex;
+    padding: 16px;
     border: 1px solid #eef2ff;
-    transition: transform 0.3s ease;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.03);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.25s ease;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 4px;
+    width: 100%;
+    background: linear-gradient(90deg, #4f46e5, #6366f1);
 }
 
 .card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(99, 102, 241, 0.15);
 }
 
-/* LEFT SIDE: Information */
+/* =========================
+   LEFT SIDE
+========================= */
 .card-info {
     flex: 1;
     display: flex;
@@ -23,79 +97,97 @@
 }
 
 .id-section span {
-    font-size: 10px;
+    font-size: 8px;
     text-transform: uppercase;
-    color: #94a3b8;
-    font-weight: 700;
+    color: #6366f1;
+    font-weight: 800;
 }
 
 .student-id {
-    font-size: 14px;
-    font-weight: 600;
-    color: #1e293b;
+    font-size: 11px;
+    color: #64748b;
 }
 
 .name-text {
-    font-size: 22px;
+    font-size: 18px;
     font-weight: 800;
-    color: #4f46e5;
-    margin: 5px 0;
+    color: #1e293b;
 }
 
 .program-tag {
-    background: #eef2ff;
-    color: #4338ca;
-    padding: 4px 12px;
-    border-radius: 8px;
-    font-size: 11px;
+    font-size: 9px;
+    background: #f1f5f9;
+    color: #475569;
+    padding: 2px 8px;
+    border-radius: 4px;
+    width: fit-content;
     font-weight: 700;
-    align-self: flex-start;
 }
 
-.meta-grid {
-    display: flex;
-    gap: 15px;
-}
-
-.meta-item label {
-    display: block;
-    font-size: 10px;
-    color: #64748b;
-    text-transform: uppercase;
-}
-
-.meta-item p {
-    font-weight: 700;
-    font-size: 14px;
-}
-
-/* RIGHT SIDE: Visuals */
+/* =========================
+   RIGHT SIDE
+========================= */
 .card-visuals {
-    width: 100px;
+    width: 110px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 12px;
+    align-items: flex-end;
+    justify-content: space-between;
 }
 
-.img-box, .qr-box {
-    width: 85px;
-    height: 85px;
-    border-radius: 14px;
+/* IMAGE */
+.img-box {
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
     overflow: hidden;
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
+    border: 1px solid #f1f5f9;
 }
 
 .student-img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Prevents stretching */
+    object-fit: cover;
 }
 
-.qr-img {
+/* =========================
+   QR (FIXED BIG & SCANNABLE)
+========================= */
+.qr-box {
+    width: 95px;
+    height: 95px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.qr-box img {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* Keeps QR code readable */
-    padding: 4px;
+    object-fit: contain;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 1024px) {
+    .content {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 680px) {
+    .content {
+        grid-template-columns: 1fr;
+    }
+
+    .top {
+        flex-direction: column;
+        gap: 10px;
+    }
 }

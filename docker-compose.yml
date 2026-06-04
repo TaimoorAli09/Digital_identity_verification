@@ -22,6 +22,10 @@ services:
       - "5299:5299"
     env_file:
       - .env
+    volumes:
+      # THIS IS WHAT YOU ADD: 
+      # Maps a folder on your computer to the uploads folder in the container
+      - ./backend/wwwroot/uploads:/app/wwwroot/uploads
     depends_on:
       - db
     networks:
